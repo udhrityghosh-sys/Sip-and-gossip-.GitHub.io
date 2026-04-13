@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sip N Gossip Cafe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0f0f0f;
+    --text: #ffffff;
+    --accent: #c89b6d;
+}
+
+body.light {
+    --bg: #f5f5f5;
+    --text: #000;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* 🌈 FUTURISTIC BACKGROUND */
+.bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #c89b6d, transparent);
+    filter: blur(100px);
+    animation: move 20s infinite alternate;
+}
+
+.blob:nth-child(2) {
+    left: 60%;
+    top: 40%;
+    background: radial-gradient(circle, #8b5e3c, transparent);
+}
+
+@keyframes move {
+    from { transform: translate(0,0); }
+    to { transform: translate(200px,150px); }
+}
+
+/* NAVBAR */
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.05);
+}
+
+nav a {
+    color: var(--text);
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    background: linear-gradient(to right, #c89b6d, #fff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* SECTIONS */
+.section {
+    padding: 100px 40px;
+    text-align: center;
+}
+
+/* 3D FOOD CARDS */
+.cards {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.food3d {
+    width: 260px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    transform-style: preserve-3d;
+    transition: 0.3s;
+}
+
+.food3d img {
+    width: 100%;
+    border-radius: 15px;
+    transform: translateZ(40px);
+}
+
+.food3d h3 {
+    transform: translateZ(30px);
+}
+
+.food3d p {
+    transform: translateZ(20px);
+}
+
+/* GALLERY */
+.gallery {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.gallery img {
+    width: 300px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
+
+/* BUTTON */
+.btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    background: var(--accent);
+    cursor: pointer;
+}
+
+/* TOGGLE */
+.toggle {
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌈 BACKGROUND -->
+<div class="bg">
+    <div class="blob"></div>
+    <div class="blob"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+    <h2>Sip N Gossip</h2>
+    <div>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <span class="toggle" onclick="toggleMode()">🌙</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Sip, Relax & Gossip ☕</h1>
+    <p>Next-Gen Café Experience</p>
+    <button class="btn">Explore Menu</button>
+</section>
+
+<!-- MENU -->
+<section class="section" id="menu">
+    <h2>Signature Menu</h2>
+    <div class="cards">
+
+        <div class="food3d">
+            <img src="https://source.unsplash.com/400x300/?momos">
+            <h3>Momos</h3>
+            <p>Juicy dumplings</p>
+        </div>
+
+        <div class="food3d">
+            <img src="https://source.unsplash.com/400x300/?noodles">
+            <h3>Thukpa</h3>
+            <p>Hot noodle soup</p>
+        </div>
+
+        <div class="food3d">
+            <img src="https://source.unsplash.com/400x300/?tea">
+            <h3>Butter Tea</h3>
+            <p>Authentic Himalayan drink</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" id="gallery">
+    <h2>Food Experience</h2>
+    <div class="gallery">
+        <img src="https://source.unsplash.com/300x300/?cafe">
+        <img src="https://source.unsplash.com/300x300/?coffee">
+        <img src="https://source.unsplash.com/300x300/?restaurant">
+    </div>
+</section>
+
+<script>
+// DARK MODE
+function toggleMode(){
+    document.body.classList.toggle("light");
+}
+
+// 3D CARD INTERACTION
+document.querySelectorAll('.food3d').forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+        let rect = card.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        let rotateX = -(y - rect.height/2)/10;
+        let rotateY = (x - rect.width/2)/10;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    card.addEventListener('mouseleave', ()=>{
+        card.style.transform = "rotateX(0) rotateY(0)";
+    });
+});
+</script>
+
+</body>
+</html> https://notepad.js.org/
